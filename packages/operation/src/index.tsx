@@ -1,6 +1,8 @@
 import { Button, Dropdown, Segmented, Slider, Space } from "antd";
+import type { MenuProps } from "antd";
 import React, { useEffect } from "react";
-import Operation, { OperationItemsProps } from "./components/Operation";
+import Operation from "./components/Operation";
+import type { OperationItemsProps } from "./components/Operation";
 
 function OperationPage() {
   const [width, setWidth] = React.useState<number>(100);
@@ -10,27 +12,25 @@ function OperationPage() {
     React.useState<boolean>(false);
   const [render, setRender] = React.useState<
     | undefined
-    | ((items: OperationItemsProps[], hash: string) => React.ReactNode)
+    | ((items: OperationItemsProps[]) => React.ReactNode)
   >(undefined);
   const [overflowRender, setOverflowRender] = React.useState<
     | undefined
-    | ((items: OperationItemsProps[], hash: string) => React.ReactNode)
+    | ((items: OperationItemsProps[]) => React.ReactNode)
   >(undefined);
 
   useEffect(() => {
     if (!isRender) {
       setRender(undefined);
     } else {
-      setRender(() => (items: OperationItemsProps[], hash = Math.random()
-        .toString(36)
-        .substring(2, 15)) => {
+      setRender(() => (items: OperationItemsProps[]) => {
         return (
           <>
             {items.map((item) => {
               return (
                 <Button
                   type="link"
-                  key={`Operation-${hash}-${item.key}`}
+                  key={`Operation-${item.key}`}
                   disabled={item.disabled}
                   onClick={item.onClick}
                 >
@@ -49,14 +49,11 @@ function OperationPage() {
         () =>
           (
             items: OperationItemsProps[],
-            hash = Math.random().toString(36).substring(2, 15)
           ) => {
             return (
-              <>
-                <Dropdown menu={{ items }}>
+                <Dropdown menu={{ items: items as MenuProps['items'] }}>
                   <Button type="link">More</Button>
                 </Dropdown>
-              </>
             );
           }
       );

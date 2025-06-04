@@ -1,4 +1,5 @@
-import { Button, Dropdown, Space } from "antd";
+import { Button, Dropdown } from "antd";
+import type { MenuProps } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import "./index.css"; // Assuming you have a CSS file for styles
 
@@ -15,14 +16,12 @@ export interface OperationProps {
   overflow?: boolean;
   overflowRender?: (
     items: OperationItemsProps[],
-    hash?: string
   ) => React.ReactNode;
-  render?: (items: OperationItemsProps[], hash?: string) => React.ReactNode;
+  render?: (items: OperationItemsProps[]) => React.ReactNode;
 }
 
 const defaultRender = (
-  items: OperationItemsProps[],
-  hash = Math.random().toString(36).substring(2, 15)
+  items: OperationItemsProps[]
 ) => {
   return (
     <>
@@ -30,7 +29,7 @@ const defaultRender = (
         return (
           <Button
             type="link"
-            key={`Operation-${hash}-${item.key}`}
+            key={`Operation-${item.key}`}
             icon={item.icon}
             disabled={item.disabled}
             onClick={item.onClick}
@@ -44,11 +43,10 @@ const defaultRender = (
 };
 const defaultOverflowRender = (
   items: OperationItemsProps[],
-  hash = Math.random().toString(36).substring(2, 15)
 ) => {
   return (
     <>
-      <Dropdown menu={{ items }}>
+      <Dropdown menu={{ items: items as MenuProps['items'] }}>
         <Button type="link">更多</Button>
       </Dropdown>
     </>
@@ -85,7 +83,7 @@ const Operation: React.FC<OperationProps> = ({
   }, [items, maxLength, visibleCount]);
 
   // 计算可见按钮数量
-  const calculateVisibleCount = (container, content) => {
+  const calculateVisibleCount = (container: Element, content: Element) => {
     const containerWidth = container.clientWidth;
     const itemWidths = Array.from(content.childNodes).map((item) => {
       if (item instanceof HTMLElement) {
