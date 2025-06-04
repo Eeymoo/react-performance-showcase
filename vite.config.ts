@@ -30,6 +30,14 @@ export default defineConfig({
             // 将其他依赖合并为通用vendor包
             return 'vendor';
           }
+          // 对 @packages 目录下的包进行单独分包
+          if (id.includes('packages/')) {
+            // 获取包名作为 chunk 名
+            const packageName = id.match(/packages\/([^/]+)/)?.[1];
+            if (packageName) {
+              return `package-${packageName}`;
+            }
+          }
           // 按功能划分src中的模块 (需实际代码结构配合)
           if (id.includes('src/assets')) {
             return 'assets-chunk';
