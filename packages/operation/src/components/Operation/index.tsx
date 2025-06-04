@@ -1,14 +1,15 @@
 import { Button, Dropdown } from "antd";
 import type { MenuProps } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FC, ReactNode, MouseEvent } from "react";
 import "./index.css"; // Assuming you have a CSS file for styles
 
 export interface OperationItemsProps {
   label: string;
   key: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   disabled?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 export interface OperationProps {
   maxLength?: number;
@@ -16,8 +17,8 @@ export interface OperationProps {
   overflow?: boolean;
   overflowRender?: (
     items: OperationItemsProps[],
-  ) => React.ReactNode;
-  render?: (items: OperationItemsProps[]) => React.ReactNode;
+  ) => ReactNode;
+  render?: (items: OperationItemsProps[]) => ReactNode;
 }
 
 const defaultRender = (
@@ -53,7 +54,7 @@ const defaultOverflowRender = (
   );
 };
 
-const Operation: React.FC<OperationProps> = ({
+const Operation: FC<OperationProps> = ({
   maxLength = Infinity,
   items = [],
   overflow = false,

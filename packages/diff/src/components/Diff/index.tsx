@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
+import type { FC } from "react";
 import {
   diffChars,
   diffLines,
@@ -62,7 +63,7 @@ interface DiffProps {
  *
  * @returns A JSX element containing the visual representation of the diff.
  */
-export const Diff: React.FC<DiffProps> = (props: DiffProps) => {
+export const Diff: FC<DiffProps> = (props: DiffProps) => {
   const {
     diffType = "char",
     diffMode = "current",
@@ -70,7 +71,7 @@ export const Diff: React.FC<DiffProps> = (props: DiffProps) => {
     currentContent,
     toArray = (string: string) => string.split("\n"), // 默认将字符串按行分割成数组
   } = props;
-  const [diffArray, setDiffArray] = React.useState<
+  const [diffArray, setDiffArray] = useState<
     ChangeObject<string | string[]>[]
   >([]);
   useEffect(() => {

@@ -1,22 +1,23 @@
 import { Button, Dropdown, Segmented, Slider, Space } from "antd";
 import type { MenuProps } from "antd";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import Operation from "./components/Operation";
 import type { OperationItemsProps } from "./components/Operation";
 
 function OperationPage() {
-  const [width, setWidth] = React.useState<number>(100);
-  const [overflow, setOverflow] = React.useState<boolean>(false);
-  const [isRender, setIsRender] = React.useState<boolean>(false);
+  const [width, setWidth] = useState<number>(100);
+  const [overflow, setOverflow] = useState<boolean>(false);
+  const [isRender, setIsRender] = useState<boolean>(false);
   const [isOverflowRender, setIsOverflowRender] =
-    React.useState<boolean>(false);
-  const [render, setRender] = React.useState<
+    useState<boolean>(false);
+  const [render, setRender] = useState<
     | undefined
-    | ((items: OperationItemsProps[]) => React.ReactNode)
+    | ((items: OperationItemsProps[]) => ReactNode)
   >(undefined);
-  const [overflowRender, setOverflowRender] = React.useState<
+  const [overflowRender, setOverflowRender] = useState<
     | undefined
-    | ((items: OperationItemsProps[]) => React.ReactNode)
+    | ((items: OperationItemsProps[]) => ReactNode)
   >(undefined);
 
   useEffect(() => {

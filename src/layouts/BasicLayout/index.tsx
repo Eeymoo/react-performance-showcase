@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from "antd";
 
@@ -10,7 +10,7 @@ const menuItems = [
   // 可以继续添加其他菜单项
 ];
 
-const BasicLayout: React.FC = () => {
+const BasicLayout: FC = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
