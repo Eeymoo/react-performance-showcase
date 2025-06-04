@@ -6,6 +6,7 @@ const { Sider, Content } = Layout;
 
 const menuItems = [
   { key: "/diff", label: "Diff 差异展示" },
+  { key: "/operation", label: "Operation 操作列" },
   // 可以继续添加其他菜单项
 ];
 
@@ -13,7 +14,6 @@ const BasicLayout: React.FC = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
   const location = useLocation();
   const navigate = useNavigate();
 
