@@ -7,46 +7,12 @@ import {
   diffArrays,
   type ChangeObject,
 } from "diff";
-import styled from "@emotion/styled";
-const DiffSpan = styled.span`
-  color: #333;
-  border-radius: 4px;
-  padding: 0 2px;
-  font-size: 14px;
-  line-height: 1.5;
-  display: inline;
-  white-space: pre-wrap;
-`;
-const DiffAbridgeSpan = styled.span`
-  // 前灰色
-  color: #999;
-  background-color: #f0f0f0;
-  padding: 0 2px;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 1.5;
-  display: inline;
-  white-space: pre-wrap;`;
-const DiffAddSpan = styled.span`
-  color: green;
-  background-color: #e6ffed;
-  padding: 0 2px;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 1.5;
-  display: inline;
-  white-space: pre-wrap;
-`;
-const DiffRemoveSpan = styled.span`
-  color: red;
-  background-color: #fff1f0;
-  padding: 0 2px;
-  font-size: 14px;
-  line-height: 1.5;
-  display: inline;
-  white-space: pre-wrap;
-  text-decoration: line-through;
-`;
+import {
+  DiffSpan,
+  DiffAbridgeSpan,
+  DiffAddSpan,
+  DiffRemoveSpan,
+} from "./DiffSpan";
 
 interface DiffProps {
   /**
@@ -78,6 +44,24 @@ interface DiffProps {
   toArray?: (string: string) => string[];
 }
 
+/**
+ * Diff component responsible for rendering the differences between two pieces of content.
+ *
+ * @param props - The props for the Diff component.
+ * @param props.diffType - The type of diff to perform. Can be "char", "word", "line", "sentence", or "array". Defaults to "char".
+ * @param props.diffMode - The mode in which the diff should be displayed. Can be "current", "history", or "abridge". Defaults to "current".
+ * @param props.historyContent - The original or historical content to compare.
+ * @param props.currentContent - The new or current content to compare against the historical content.
+ * @param props.toArray - A custom function to convert a string into an array. Defaults to splitting the string by newline.
+ *
+ * The component uses the provided diffType to determine the appropriate diff algorithm to compute the differences
+ * between historyContent and currentContent. When diffMode is set to "history" or "current", it displays the respective
+ * content without diffing. Otherwise, for non-array diff types, it performs the comparison.
+ *
+ * The computed differences are stored in the component's state (diffArray) and then rendered as a series of styled spans.
+ *
+ * @returns A JSX element containing the visual representation of the diff.
+ */
 export const Diff: React.FC<DiffProps> = (props: DiffProps) => {
   const {
     diffType = "char",
@@ -86,10 +70,12 @@ export const Diff: React.FC<DiffProps> = (props: DiffProps) => {
     currentContent,
     toArray = (string: string) => string.split("\n"), // 默认将字符串按行分割成数组
   } = props;
-  const [diffArray, setDiffArray] = React.useState<ChangeObject<string|string[]>[]>([]);
+  const [diffArray, setDiffArray] = React.useState<
+    ChangeObject<string | string[]>[]
+  >([]);
   useEffect(() => {
     let diff = diffChars;
-    let diffs: ChangeObject<string|string[]>[] = [];
+    let diffs: ChangeObject<string | string[]>[] = [];
 
     if (diffType === "array") {
       const historyContents = toArray(historyContent || "");
@@ -129,7 +115,7 @@ export const Diff: React.FC<DiffProps> = (props: DiffProps) => {
       diffs = diff(historyContent, currentContent);
     }
     setDiffArray(diffs || []);
-  }, [historyContent, currentContent, diffType, diffMode]);
+  }, [historyContent, currentContent, diffType, diffMode, toArray]);
 
   return (
     <div className="diff-container">
@@ -137,18 +123,27 @@ export const Diff: React.FC<DiffProps> = (props: DiffProps) => {
         {diffArray?.map((item, index) => {
           let Span = DiffSpan;
           let value = item.value || "";
+          let className = "diff-normal";
           if (item.added) {
             Span = DiffAddSpan;
+            className = "diff-added";
           } else if (item.removed) {
             Span = DiffRemoveSpan;
-          } else if (diffMode === 'abridge' && !item.added && !item.removed && value.length > 20) {
-            Span = DiffAbridgeSpan
+            className = "diff-removed";
+          } else if (
+            diffMode === "abridge" &&
+            !item.added &&
+            !item.removed &&
+            value.length > 20
+          ) {
+            Span = DiffAbridgeSpan;
             const startValue = value.slice(0, 10);
             const endValue = value.slice(-10);
             value = `${startValue} ... ${endValue}`;
+            className = "diff-abridge";
           }
 
-          return <Span key={`${item.value}-${index}`}>{value}</Span>;
+          return <Span className={className} key={`${item.value}-${index}`}>{value}</Span>;
         })}
       </div>
     </div>
