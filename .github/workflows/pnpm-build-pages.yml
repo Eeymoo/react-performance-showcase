@@ -26,8 +26,11 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: package.json
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
 
       - name: Install Dependencies
         run: pnpm install
