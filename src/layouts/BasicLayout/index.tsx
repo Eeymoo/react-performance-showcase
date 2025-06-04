@@ -5,7 +5,7 @@ import { Layout, Menu, theme } from "antd";
 const { Sider, Content } = Layout;
 
 const menuItems = [
-  { key: "/diff", label: "差异展示" },
+  { key: "/diff", label: "Diff 差异展示" },
   // 可以继续添加其他菜单项
 ];
 
@@ -48,7 +48,8 @@ const BasicLayout: React.FC = () => {
           padding: 24,
           background: colorBgContainer,
           borderRadius: 8,
-          minHeight: "calc(100vh - 48px)",
+          maxHeight: "calc(100vh - 48px)",
+          overflow: "auto",
         }}
       >
         <Outlet />
