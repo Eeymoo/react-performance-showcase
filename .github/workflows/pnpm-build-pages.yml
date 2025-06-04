@@ -1,109 +1,42 @@
-name: PNPM React CI/CD to GitHub Pages
+name: Build and Deploy Pages
 
 on:
   push:
     branches:
-      - main   # 主分支触发部署
+      - main
   pull_request:
     branches:
-      - main   # PR到主分支时运行测试
+      - main
 
 jobs:
-  build-test:
-    name: Build and Test with PNPM
+  build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: "deploy-github-pages"
+      cancel-in-progress: true
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      # 设置 Node.js 环境
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x
-          
-      # 安装 PNPM (如果未预装)
-      - name: Install PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.x
-          
-      # 安装依赖（使用 PNPM 缓存）
-      - name: Install dependencies with PNPM
-        run: pnpm install --frozen-lockfile
-        
-      # 运行代码规范检查
-      - name: Run linting
-        run: pnpm lint
-          
-      # 构建生产包
-      - name: Build production bundle
-        run: pnpm build
-          
-      # 保存构建产物（用于部署阶段）
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: react-build
-          path: dist/ # create-react-app 默认输出目录
+          node-version: '16'
+          cache: 'pnpm'
+          cache-dependency-path: package.json
 
-  deploy-pages:
-    name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: build-test    # 依赖构建任务完成
-    if: ${{ github.ref == 'refs/heads/main' }} # 仅主分支部署
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      # 下载构建产物
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: react-build
-          path: dist/
-          
-      # 部署到 GitHub Pages
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build Project
+        run: pnpm run build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          # 配置单页应用路由
-          enable_jekyll: false # 禁用 Jekyll 处理
-          # 可选的 CNAME 设置 (如果有自定义域名)
-          # cname: yourdomain.com
-          
-      # 删除构建产物以节省空间
-      - name: Clean up artifacts
-        run: rm -rf dist/
-        
-  notify:
-    name: Deployment Notification
-    runs-on: ubuntu-latest
-    needs: deploy-pages
-    if: ${{ always() }} # 无论部署是否成功都发送通知
-    
-    steps:
-      - name: Get deployment status
-        id: deployment_status
-        run: echo "status=${{ job.status }}" >> $GITHUB_OUTPUT
-        
-      # 部署成功通知
-      - name: Send success notification
-        if: ${{ steps.deployment_status.outputs.status == 'success' }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "React App 已成功部署到 GitHub Pages! 🚀\n访问地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
-          SLACK_COLOR: "#36a64f"
-        
-      # 部署失败通知
-      - name: Send failure notification
-        if: ${{ steps.deployment_status.outputs.status == 'failure' }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: "⚠️ 部署到 GitHub Pages 失败! \n请检查构建日志: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          SLACK_COLOR: "#ff0000"
