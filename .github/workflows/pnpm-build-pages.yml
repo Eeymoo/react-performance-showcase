@@ -32,6 +32,11 @@ jobs:
           version: 8
           run_install: false
 
+      - name: Add pnpm to PATH
+        run: echo "${PNPM_HOME}" >> $GITHUB_PATH
+        env:
+          PNPM_HOME: ${{ steps.pnpm.outputs.pnpm_home }}
+
       - name: Install Dependencies
         run: pnpm install
 
