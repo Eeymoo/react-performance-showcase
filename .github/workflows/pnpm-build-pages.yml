@@ -23,19 +23,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'pnpm'
-          cache-dependency-path: package.json
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-
-      - name: Add pnpm to PATH
-        run: echo "${PNPM_HOME}" >> $GITHUB_PATH
-        env:
-          PNPM_HOME: ${{ steps.pnpm.outputs.pnpm_home }}
+        run: |
+          npm install -g pnpm
+          pnpm config set store-dir ~/.pnpm-store
 
       - name: Install Dependencies
         run: pnpm install
