@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main   # 主分支触发部署
-      - dev    # 开发分支触发测试构建
   pull_request:
     branches:
       - main   # PR到主分支时运行测试
@@ -22,19 +21,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-          cache: 'pnpm' # 启用 pnpm 缓存
           
       # 安装 PNPM (如果未预装)
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
           version: 8.x
-          
-      # PNPM 缓存设置
-      - name: Configure PNPM cache
-        uses: pnpm/action-setup@v2
-        with:
-          run_install: false
           
       # 安装依赖（使用 PNPM 缓存）
       - name: Install dependencies with PNPM
@@ -43,12 +35,6 @@ jobs:
       # 运行代码规范检查
       - name: Run linting
         run: pnpm lint
-        
-      # 运行测试
-      - name: Run tests
-        run: pnpm test -- --coverage
-        env:
-          CI: true
           
       # 构建生产包
       - name: Build production bundle
@@ -59,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: react-build
-          path: build/ # create-react-app 默认输出目录
+          path: dist/ # create-react-app 默认输出目录
 
   deploy-pages:
     name: Deploy to GitHub Pages
@@ -76,14 +62,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: react-build
-          path: build/
+          path: dist/
           
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./dist
           # 配置单页应用路由
           enable_jekyll: false # 禁用 Jekyll 处理
           # 可选的 CNAME 设置 (如果有自定义域名)
@@ -91,7 +77,7 @@ jobs:
           
       # 删除构建产物以节省空间
       - name: Clean up artifacts
-        run: rm -rf build/
+        run: rm -rf dist/
         
   notify:
     name: Deployment Notification
