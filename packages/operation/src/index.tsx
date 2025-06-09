@@ -7,7 +7,7 @@ import type { OperationItemsProps } from "./components/Operation";
 
 function OperationPage() {
   const [width, setWidth] = useState<number>(100);
-  const [overflow, setOverflow] = useState<boolean>(false);
+  const [overflow, setOverflow] = useState<boolean>(true);
   const [isRender, setIsRender] = useState<boolean>(false);
   const [isOverflowRender, setIsOverflowRender] =
     useState<boolean>(false);
