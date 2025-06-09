@@ -2,12 +2,6 @@
 
 一个用于展示文本差异比较的 React 组件，支持多种对比粒度和显示模式。
 
-## 安装
-
-```bash
-npm install @your-package/diff
-```
-
 ## 基础用法
 
 ```tsx
