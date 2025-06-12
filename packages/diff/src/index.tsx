@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import Diff from "./components/Diff/index.tsx";
-import { Segmented, Space } from "antd";
+import { Segmented, Space, Input, Button } from "antd";
 
 function DiffPage() {
   // 差异类型的 state
@@ -11,6 +11,35 @@ function DiffPage() {
   const [diffMode, setDiffMode] = useState<
     "history" | "current" | "compare" | "abridge"
   >("compare");
+  const [historyContent, setHistoryContent] = useState("");
+  const [currentContent, setCurrentContent] = useState("");
+  // 示例内容数组 里面包含多个对象
+  // 每个对象包含 historyContent 和 currentContent
+  const exampleContents = useMemo(
+    () => [
+      {
+        historyContent: `你好，世界！今天天气真好。`,
+        currentContent: `你好，小明！明天天气挺好的。`,
+      },
+      {
+        historyContent: `《量子回声》讲述2085年科学家林薇研发出跨维度通信装置"量子铃"，却意外接收到平行宇宙的求救信号。\n当团队解码信号时，发现所有平行世界的文明都面临同种量子病毒威胁。\n人类必须与镜像宇宙的自己合作，在72小时内破解病毒源码防止现实崩塌。`,
+        currentContent: `《量子回声》聚焦2085年科学家林薇发明的跨维度设备"量子铃"，该装置意外捕获平行宇宙的濒危信号。\n研究团队破译后发现所有平行世界遭受同种量子病毒侵袭。\n书中核心冲突在于人类必须与平行自我联手，在三天内破解病毒编码阻止现实维度瓦解。`,
+      },
+      {
+        historyContent: `"Neural Frontier" depicts neuro-engineer Kael's creation of a dream-sharing network that accidentally releases repressed collective trauma. As nightmares manifest physically across London, Kael must enter the collective subconscious with his prototype "Cortex Key" device to confront the entity absorbing human hope before consciousness collapses.`,
+        currentContent: `"Neural Frontier" follows neuro-engineer Kael whose dream-sharing technology triggers the materialization of buried collective trauma. When nightmares physically erupt in London, Kael deploys his experimental "Cortex Key" to journey into the shared subconscious and stop an entity consuming human optimism before global consciousness fails.`,
+      },
+      {
+        historyContent: `当Tokyo的neural-network系统遭quantum-level病毒入侵，《意识边境》的AI伦理官Yumi发现这源于人类恐惧的具象化。\n她必须用尚未验证的quantum-entanglement协议进入数字collective unconscious，在防火墙collapse前消除源头entity。`,
+        currentContent: `《意识边境》危机始于Tokyo的neural-network被量子级病毒渗透，AI伦理官Yumi溯源发现是人类集体恐惧的manifestation。\n剧情高潮在于她必须采用未经测试的quantum-entanglement技术闯入digital collective unconscious，赶在security-matrix崩溃前清除寄生entity的核心代码。`,
+      },
+      {
+        historyContent: `为体系化推进ESG议题的改善与提升，公司基于“维度—议题—指标”三个层级构建ESG管理指标体系，并对指标情况开展对标分析，根据不同特性将指标分类，明确不同类型指标的差异化管控模式。公司将所有指标分配到相关责任部门，结合外部要求和公司业务特点，持续推动指标的改善或提升。报告期内，“应对气候变化”“生态系统与生物多样性保护”“风险管理与内部控制”2等ESG议题相关管理指标实现改善提升。此外，公司建立ESG信息化管理平台，实现ESG数据管理体系化、标准化与智能化，进一步提升公司ESG数据治理与信息管理效率。`,
+        currentContent: `为体系化推进 ESG 议题的改善与提升，公司构建了“维度—议题—指标”三层级管理指标体系，并对指标进行对标分析。根据不同特性，公司将指标分类并明确差异化管控模式。所有指标均分配至责任部门，相关部门结合外部要求与公司业务特点，持续推动各项指标的改善或提升。报告期内，在“应对气候变化”、“生态系统与生物多样性保护”、“风险管理与内部控制”等重要实质性议题相关的管理指标上取得进展。此外，公司建立了 ESG 信息化管理平台，实现 ESG 数据的体系化、标准化与智能化管理，有效提升了数据治理与信息管理效率。`,
+      }
+    ],
+    []
+  );
 
   const chineseSegmenter = useMemo(
     () => (text: string) => {
@@ -71,6 +100,51 @@ function DiffPage() {
             setDiffMode(value)
           }
         />
+      </div>
+
+      <div className="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-100">
+        <div className="flex gap-2 mb-4">
+          {
+            exampleContents.map((example, index) => (
+              <Button
+                key={index}
+                onClick={() => {
+                  setHistoryContent(example.historyContent);
+                  setCurrentContent(example.currentContent);
+                }}
+              >
+                示例 {index + 1}
+              </Button>
+            ))
+          }
+        </div>
+        <div className="flex gap-4 mb-4">
+          <div className="w-1/2">
+            <Input.TextArea
+              autoSize={{ minRows: 4, maxRows: Infinity }}
+              style={{ height: "100%" }}
+              value={historyContent}
+              onChange={(e) => setHistoryContent(e.target.value)}
+            />
+          </div>
+          <div className="w-1/2">
+            <Input.TextArea
+              autoSize={{ minRows: 4, maxRows: Infinity }}
+              style={{ height: "100%" }}
+              value={currentContent}
+              onChange={(e) => setCurrentContent(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="bg-white p-4 rounded-lg">
+          <Diff
+            diffType={diffType}
+            diffMode={diffMode}
+            historyContent={historyContent}
+            currentContent={currentContent}
+            toArray={chineseSegmenter}
+          />
+        </div>
       </div>
       {/* 渲染 Diff 组件，传入差异类型和模式 */}
 
