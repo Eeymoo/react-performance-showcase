@@ -1,4 +1,4 @@
-import{y as c,C as j,E as v,B as e,F as w,G as N,H as A}from"./vendor-react-CTURZAkq.js";import{n as g}from"./@vendor-emotion-h398TVVv.js";import{S,B as M,I as b,a as T}from"./vendor-antd-DVG3APET.js";import"./vendor-react-dom-Dj5QkJX1.js";import"./vendor-antd-icons-SJ3w7482.js";const E=g.span`
+import{y as c,C as j,J as v,B as e,L as w,N,P as A}from"./vendor-react-kWdcj25T.js";import{n as g}from"./@vendor-emotion-DXKo8qI6.js";import{a as S,B as M,I as b,S as T}from"./vendor-antd-Cs5o8GY6.js";import"./vendor-react-dom-BP3S_nvK.js";import"./vendor-antd-icons-wBpDmQ8_.js";const k=g.span`
   color: #333;
   border-radius: 4px;
   padding: 0 2px;
@@ -6,7 +6,7 @@ import{y as c,C as j,E as v,B as e,F as w,G as N,H as A}from"./vendor-react-CTUR
   line-height: 1.5;
   display: inline;
   white-space: pre-wrap;
-`,k=g.span`
+`,E=g.span`
   color: #999;
   background-color: #f0f0f0;
   padding: 0 2px;
@@ -34,7 +34,7 @@ import{y as c,C as j,E as v,B as e,F as w,G as N,H as A}from"./vendor-react-CTUR
   white-space: pre-wrap;
   text-decoration: line-through;
 `,f=a=>{const{diffType:o="char",diffMode:s="current",historyContent:d="",currentContent:l,toArray:h=t=>t.split(`
-`)}=a,[p,y]=c.useState([]);return c.useEffect(()=>{let t=v,i=[];if(o==="array"){const n=h(d||""),r=h(l||"");i=j(n,r)}o==="word"?t=w:o==="line"?t=N:o==="sentence"?t=A:o==="char"&&(t=v),s==="history"?i=[{value:d,added:!1,removed:!1,count:d.length}]:s==="current"?i=[{value:l,added:!1,removed:!1,count:l.length}]:o!=="array"&&(i=t(d,l)),y(i||[])},[d,l,o,s,h]),e.jsx("div",{className:"diff-container",children:e.jsx("div",{className:"diff-content",children:p?.map((t,i)=>{let n=E,r=t.value||"",m="diff-normal";if(t.added)n=K,m="diff-added";else if(t.removed)n=D,m="diff-removed";else if(s==="abridge"&&!t.added&&!t.removed&&r.length>20){n=k;const u=r.slice(0,10),x=r.slice(-10);r=`${u} ... ${x}`,m="diff-abridge"}return e.jsx(n,{className:m,children:r},`${t.value}-${i}`)})})})};function q(){const[a,o]=c.useState("word"),[s,d]=c.useState("compare"),[l,h]=c.useState(""),[p,y]=c.useState(""),t=c.useMemo(()=>[{historyContent:"你好，世界！今天天气真好。",currentContent:"你好，小明！明天天气挺好的。"},{historyContent:`《量子回声》讲述2085年科学家林薇研发出跨维度通信装置"量子铃"，却意外接收到平行宇宙的求救信号。
+`)}=a,[p,y]=c.useState([]);return c.useEffect(()=>{let t=v,i=[];if(o==="array"){const n=h(d||""),r=h(l||"");i=j(n,r)}o==="word"?t=w:o==="line"?t=N:o==="sentence"?t=A:o==="char"&&(t=v),s==="history"?i=[{value:d,added:!1,removed:!1,count:d.length}]:s==="current"?i=[{value:l,added:!1,removed:!1,count:l.length}]:o!=="array"&&(i=t(d,l)),y(i||[])},[d,l,o,s,h]),e.jsx("div",{className:"diff-container",children:e.jsx("div",{className:"diff-content",children:p?.map((t,i)=>{let n=k,r=t.value||"",m="diff-normal";if(t.added)n=K,m="diff-added";else if(t.removed)n=D,m="diff-removed";else if(s==="abridge"&&!t.added&&!t.removed&&r.length>20){n=E;const u=r.slice(0,10),x=r.slice(-10);r=`${u} ... ${x}`,m="diff-abridge"}return e.jsx(n,{className:m,children:r},`${t.value}-${i}`)})})})};function R(){const[a,o]=c.useState("word"),[s,d]=c.useState("compare"),[l,h]=c.useState(""),[p,y]=c.useState(""),t=c.useMemo(()=>[{historyContent:"你好，世界！今天天气真好。",currentContent:"你好，小明！明天天气挺好的。"},{historyContent:`《量子回声》讲述2085年科学家林薇研发出跨维度通信装置"量子铃"，却意外接收到平行宇宙的求救信号。
 当团队解码信号时，发现所有平行世界的文明都面临同种量子病毒威胁。
 人类必须与镜像宇宙的自己合作，在72小时内破解病毒源码防止现实崩塌。`,currentContent:`《量子回声》聚焦2085年科学家林薇发明的跨维度设备"量子铃"，该装置意外捕获平行宇宙的濒危信号。
 研究团队破译后发现所有平行世界遭受同种量子病毒侵袭。
@@ -66,4 +66,4 @@ import{y as c,C as j,E as v,B as e,F as w,G as N,H as A}from"./vendor-react-CTUR
 “领航者号”国际空间站上的刘培强即将进入休眠时与刘启失联。刘培强强行打开休眠舱，发现空间站正在远离木星，刘培强说服被MOSS唤醒来阻止他的俄罗斯航天员马卡洛夫，他们经空间站外通过太空行走前往空间站主控室，在途中马卡洛夫因航天员头盔被MOSS击碎而死。刘培强在主控室得知，木星引力引力激增发生时，MOSS在三号紧急预案启动后的0.42秒后即推算得出“流浪地球计划”失败兼且救援行动和点燃木星方案无用，而基于此推算之下自行授权、启动携带人类文明记录逃离的“火种计划”。地面上的刘启等人决定修改发动机程序，用苏拉威西三号转向发动机点燃木星大气，刘培强说服联合政府为王磊小队打开全球广播呼唤支持，并共享了点燃木星方案，随后还在撤离当中的救援部队顿时回到岗位全力协助。苏拉威西三号发动机、新加坡一号发动机及雅加达四号发动机，三座行星发动机实行了点燃木星方案，但它们的喷射流距木星大气仍有五千多公里而无法点燃。刘培强向联合政府申请牺牲空间站以换取其燃料在木星地球夹缝当中爆炸去补足那五千公里的引爆距离，MOSS随即屏蔽空间站通讯。刘培强关闭消防系统并以马卡洛夫送给他的伏特加烧毁MOSS的核心节点让其失效，以夺得空间站控制权，并释放空间站的休眠仓，经联合政府同意，刘培强手动驾驶空间站进入喷射流。空间站的爆炸点燃了木星大气，地球被推离木星。
 
 三年后，刘启成长为一名运载车初阶驾驶员，韩朵朵和李一一也成为了运载车车组成员，而他前往地表经过的北京地下城也从之前的木星引力危机当中恢复过来，而地球则继续前往新家园的旅途。
-`})]})]})]})}export{q as default};
+`})]})]})]})}export{R as default};
