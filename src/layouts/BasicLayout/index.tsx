@@ -7,6 +7,7 @@ const { Sider, Content } = Layout;
 const menuItems = [
   { key: "/diff", label: "Diff 差异展示" },
   { key: "/operation", label: "Operation 操作列" },
+  { key: "/block-editor", label: "Block Editor 块编辑器" },
   // 可以继续添加其他菜单项
 ];
 

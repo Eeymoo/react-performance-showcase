@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 const BasicLayout = lazy(() => import("./layouts/BasicLayout"));
 const DiffPackage = lazy(() => import("@packages/diff"));
 const OperationPackage = lazy(() => import("@packages/operation"));
+const BlockEditorPackage = lazy(() => import("@packages/blockEditor"));
 // const ProLayout = lazy(() => import("@/layouts/ProLayout"));
 // const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         path: "operation",
         element: <OperationPackage />,
       },
+      {
+        path: "block-editor",
+        element: <BlockEditorPackage />,
+      }
     ],
   }
 ]);
