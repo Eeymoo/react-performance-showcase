@@ -174,6 +174,10 @@ export const Diff: FC<DiffProps> = (props: DiffProps) => {
           count: currentContent.length,
         },
       ];
+    }  else if (diffType === "word") {
+      diffs = diffWords(historyContent, currentContent, {
+        intlSegmenter: Intl.Segmenter ? new Intl.Segmenter(undefined, { granularity: "word" }) : undefined,
+      });
     } else if (diffType !== "array") {
       diffs = diff(historyContent, currentContent);
     }
