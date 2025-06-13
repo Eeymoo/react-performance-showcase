@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { FC } from "react";
 import {
   diffChars,
@@ -40,6 +40,9 @@ interface DiffProps {
 
   /** Current content for comparison. */
   currentContent: string;
+  
+  /** Threshold for filtering differences, default is 0.85. */
+  threshold?: number;
 
   /** Function to convert a string into an array, default splits by lines. */
   toArray?: (string: string) => string[];
@@ -53,6 +56,7 @@ interface DiffProps {
  * @param props.diffMode - The mode in which the diff should be displayed. Can be "current", "history", or "abridge". Defaults to "current".
  * @param props.historyContent - The original or historical content to compare.
  * @param props.currentContent - The new or current content to compare against the historical content.
+ * @param props.threshold - A threshold value for filtering differences. Defaults to 0.85.
  * @param props.toArray - A custom function to convert a string into an array. Defaults to splitting the string by newline.
  *
  * The component uses the provided diffType to determine the appropriate diff algorithm to compute the differences
@@ -69,11 +73,69 @@ export const Diff: FC<DiffProps> = (props: DiffProps) => {
     diffMode = "current",
     historyContent = "",
     currentContent,
+    threshold = 0.85,
     toArray = (string: string) => string.split("\n"), // 默认将字符串按行分割成数组
   } = props;
   const [diffArray, setDiffArray] = useState<
     ChangeObject<string | string[]>[]
   >([]);
+
+  // 处理阈值方法
+  const thresholdFunc =  useCallback((
+    value: ChangeObject<string | string[]>[],
+    threshold: number = 0.85
+  ) => {
+    const result: ChangeObject<string | string[]>[] = [];
+    let totalCount = 0;
+    let addedCount = 0;
+    let removedCount = 0;
+    let originalCount = 0;
+    let originalValue = "";
+    let currentValue = "";
+
+    if (value.length === 0) {
+      return result;
+    }
+    
+    for (const item of value) {
+      if (item.added) {
+        addedCount += item.count || 0;
+        currentValue += item.value || "";
+      } else if (item.removed) {
+        removedCount += item.count || 0;
+        originalValue += item.value || "";
+      } else {
+        originalCount += item.count || 0;
+        originalValue += item.value || "";
+        currentValue += item.value || "";
+      }
+
+      totalCount += item.count || 0;
+    }
+
+    if (
+      originalCount === 0 ||
+      (addedCount + removedCount) / totalCount >= threshold ||
+      originalCount / totalCount <= (1 - threshold)
+    ) {
+      result.push({
+        value: originalValue,
+        added: false,
+        removed: true,
+        count: originalValue.length,
+      });
+      result.push({
+        value: currentValue,
+        added: true,
+        removed: false,
+        count: currentValue.length,
+      });
+
+      return result;
+    }
+    return value;
+  }, []);
+
   useEffect(() => {
     let diff = diffChars;
     let diffs: ChangeObject<string | string[]>[] = [];
@@ -115,8 +177,10 @@ export const Diff: FC<DiffProps> = (props: DiffProps) => {
     } else if (diffType !== "array") {
       diffs = diff(historyContent, currentContent);
     }
+
+    diffs = thresholdFunc(diffs, threshold);
     setDiffArray(diffs || []);
-  }, [historyContent, currentContent, diffType, diffMode, toArray]);
+  }, [historyContent, currentContent, diffType, diffMode, toArray, threshold]);
 
   return (
     <div className="diff-container">

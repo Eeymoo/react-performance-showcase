@@ -11,6 +11,7 @@ function DiffPage() {
   const [diffMode, setDiffMode] = useState<
     "history" | "current" | "compare" | "abridge"
   >("compare");
+  const [threshold, setThreshold] = useState(0.85); // 阈值 state
   const [historyContent, setHistoryContent] = useState("");
   const [currentContent, setCurrentContent] = useState("");
   // 示例内容数组 里面包含多个对象
@@ -36,7 +37,15 @@ function DiffPage() {
       {
         historyContent: `为体系化推进ESG议题的改善与提升，公司基于“维度—议题—指标”三个层级构建ESG管理指标体系，并对指标情况开展对标分析，根据不同特性将指标分类，明确不同类型指标的差异化管控模式。公司将所有指标分配到相关责任部门，结合外部要求和公司业务特点，持续推动指标的改善或提升。报告期内，“应对气候变化”“生态系统与生物多样性保护”“风险管理与内部控制”2等ESG议题相关管理指标实现改善提升。此外，公司建立ESG信息化管理平台，实现ESG数据管理体系化、标准化与智能化，进一步提升公司ESG数据治理与信息管理效率。`,
         currentContent: `为体系化推进 ESG 议题的改善与提升，公司构建了“维度—议题—指标”三层级管理指标体系，并对指标进行对标分析。根据不同特性，公司将指标分类并明确差异化管控模式。所有指标均分配至责任部门，相关部门结合外部要求与公司业务特点，持续推动各项指标的改善或提升。报告期内，在“应对气候变化”、“生态系统与生物多样性保护”、“风险管理与内部控制”等重要实质性议题相关的管理指标上取得进展。此外，公司建立了 ESG 信息化管理平台，实现 ESG 数据的体系化、标准化与智能化管理，有效提升了数据治理与信息管理效率。`,
-      }
+      },
+      {
+        historyContent: `《水浒传》是元末明初施耐庵创作的长篇小说（现存刊本署名大多有施耐庵或罗贯中或两人皆有），是中国历史上第一部用白话文写成的章回体长篇小说 [36]。
+全书通过描写以宋江为首的一百零八位梁山好汉消灭乱臣贼子、水泊梁山壮大和接受宋朝招安，以及受招安后为宋朝征战的宏大故事。 [41]
+《水浒传》是中国古典四大名著之一，问世后，在社会上产生了巨大的影响，成为后世中国小说创作的典范。《水浒传》是中国历史上最早用白话文写成的章回小说，流传极广，脍炙人口；同时也是汉语言文学中具备史诗特征的作品之一，对中国乃至东亚的叙事文学都有深远的影响。 [1]`,
+        currentContent: `《红楼梦》，中国古代章回体长篇虚构 [23]小说，中国古典四大名著之一。其通行本共120回，一般认为前80回是清代作家曹雪芹所著，后40回作者为无名氏，整理者为程伟元、高鹗。小说以贾、史、王、薛四大家族的兴衰为背景，以富贵公子贾宝玉为视角，以贾宝玉与林黛玉、薛宝钗的爱情婚姻悲剧为主线，描绘了一些闺阁佳人的人生百态，展现了真正的人性美和悲剧美，是一部从各个角度展现女性美以及中国古代社会百态的史诗性著作。
+《红楼梦》版本有120回“程本”和80回“脂本”两大系统。程本为程伟元排印的印刷本，脂本为脂砚斋在不同时期抄评的早期手抄本。脂本是程本的底本。
+《红楼梦》是一部具有世界影响力的人情小说、中国封建社会的百科全书、传统文化的集大成者、中国古代小说巅峰之作、中国古典四大名著之首。其作者以“大旨谈情，实录其事”自勉，只按自己的事体情理，按迹循踪，摆脱旧套，新鲜别致，取得了非凡的艺术成就。“真事隐去，假语存焉”的特殊笔法更是令后世读者脑洞大开，揣测之说久而遂多。二十世纪以来，《红楼梦》更以其丰富深刻的思想底蕴和异常出色的艺术成就使学术界产生了以其为研究对象的专门学问——红学。 [3]`,
+      },
     ],
     []
   );
@@ -102,6 +111,37 @@ function DiffPage() {
         />
       </div>
 
+      <div className="mb-4">
+        <span className="mr-2">Diff Threshold:</span>
+        <Segmented
+          options={[
+            { label: "0.1", value: 0.1 },
+            { label: "0.15", value: 0.15 },
+            { label: "0.2", value: 0.2 },
+            { label: "0.25", value: 0.25 },
+            { label: "0.3", value: 0.3 },
+            { label: "0.35", value: 0.35 },
+            { label: "0.4", value: 0.4 },
+            { label: "0.45", value: 0.45 },
+            { label: "0.5", value: 0.5 },
+            { label: "0.55", value: 0.55 },
+            { label: "0.6", value: 0.6 },
+            { label: "0.65", value: 0.65 },
+            { label: "0.7", value: 0.7 },
+            { label: "0.75", value: 0.75 },
+            { label: "0.8", value: 0.8 },
+            { label: "0.85", value: 0.85 },
+            { label: "0.9", value: 0.9 },
+            { label: "0.95", value: 0.95 },
+            { label: "1.0", value: 1.0 },            
+          ]}
+          value={threshold}
+          onChange={(value: number) =>
+            setThreshold(value)
+          }
+        />
+      </div>
+
       <div className="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-100">
         <div className="flex gap-2 mb-4">
           {
@@ -143,6 +183,7 @@ function DiffPage() {
             historyContent={historyContent}
             currentContent={currentContent}
             toArray={chineseSegmenter}
+            threshold={threshold}
           />
         </div>
       </div>
@@ -156,6 +197,7 @@ function DiffPage() {
             diffMode={diffMode}
             historyContent={`《量子回声》讲述2085年科学家林薇研发出跨维度通信装置"量子铃"，却意外接收到平行宇宙的求救信号。\n当团队解码信号时，发现所有平行世界的文明都面临同种量子病毒威胁。\n人类必须与镜像宇宙的自己合作，在72小时内破解病毒源码防止现实崩塌。`}
             currentContent={`《量子回声》聚焦2085年科学家林薇发明的跨维度设备"量子铃"，该装置意外捕获平行宇宙的濒危信号。\n研究团队破译后发现所有平行世界遭受同种量子病毒侵袭。\n书中核心冲突在于人类必须与平行自我联手，在三天内破解病毒编码阻止现实维度瓦解。`}
+            threshold={threshold}
           />
         </div>
         <div>
@@ -165,6 +207,7 @@ function DiffPage() {
             diffMode={diffMode}
             historyContent={`"Neural Frontier" depicts neuro-engineer Kael's creation of a dream-sharing network that accidentally releases repressed collective trauma. As nightmares manifest physically across London, Kael must enter the collective subconscious with his prototype "Cortex Key" device to confront the entity absorbing human hope before consciousness collapses.`}
             currentContent={`"Neural Frontier" follows neuro-engineer Kael whose dream-sharing technology triggers the materialization of buried collective trauma. When nightmares physically erupt in London, Kael deploys his experimental "Cortex Key" to journey into the shared subconscious and stop an entity consuming human optimism before global consciousness fails.`}
+            threshold={threshold}
           />
         </div>
         <div>
@@ -174,6 +217,7 @@ function DiffPage() {
             diffMode={diffMode}
             historyContent={`当Tokyo的neural-network系统遭quantum-level病毒入侵，《意识边境》的AI伦理官Yumi发现这源于人类恐惧的具象化。\n她必须用尚未验证的quantum-entanglement协议进入数字collective unconscious，在防火墙collapse前消除源头entity。`}
             currentContent={`《意识边境》危机始于Tokyo的neural-network被量子级病毒渗透，AI伦理官Yumi溯源发现是人类集体恐惧的manifestation。\n剧情高潮在于她必须采用未经测试的quantum-entanglement技术闯入digital collective unconscious，赶在security-matrix崩溃前清除寄生entity的核心代码。`}
+            threshold={threshold}
           />
         </div>
         <div>
@@ -183,6 +227,7 @@ function DiffPage() {
             diffMode={diffMode}
             historyContent={`你好，世界！今天天气真好。`}
             currentContent={`你好，小明！明天天气挺好的。`}
+            threshold={threshold}
           />
         </div>
         <div>
@@ -193,6 +238,7 @@ function DiffPage() {
             toArray={chineseSegmenter}
             historyContent={`你好，世界！今天天气真好。`}
             currentContent={`你好，小明！明天天气挺好的。`}
+            threshold={threshold}
           />
         </div>
         <div>
@@ -220,6 +266,7 @@ function DiffPage() {
 
 三年后，刘启成长为一名运载车初阶驾驶员，韩朵朵和李一一也成为了运载车车组成员，而他前往地表经过的北京地下城也从之前的木星引力危机当中恢复过来，而地球则继续前往新家园的旅途。
 `}
+            threshold={threshold}
           />
         </div>
       </Space>
