@@ -100,14 +100,14 @@ export const Diff: FC<DiffProps> = (props: DiffProps) => {
     for (const item of value) {
       if (item.added) {
         addedCount += item.count || 0;
-        currentValue += item.value || "";
+        currentValue += Array.isArray(item.value) ? item.value.join("") : item.value || "";
       } else if (item.removed) {
         removedCount += item.count || 0;
-        originalValue += item.value || "";
+        originalValue += Array.isArray(item.value) ? item.value.join("") : item.value || "";
       } else {
         originalCount += item.count || 0;
-        originalValue += item.value || "";
-        currentValue += item.value || "";
+        originalValue += Array.isArray(item.value) ? item.value.join("") : item.value || "";
+        currentValue += Array.isArray(item.value) ? item.value.join("") : item.value || "";
       }
 
       totalCount += item.count || 0;
@@ -119,13 +119,13 @@ export const Diff: FC<DiffProps> = (props: DiffProps) => {
       originalCount / totalCount <= (1 - threshold)
     ) {
       result.push({
-        value: originalValue,
+        value: Array.isArray(originalValue) ? originalValue.join("") : originalValue,
         added: false,
         removed: true,
         count: originalValue.length,
       });
       result.push({
-        value: currentValue,
+        value: Array.isArray(currentValue) ? currentValue.join("") : currentValue,
         added: true,
         removed: false,
         count: currentValue.length,
