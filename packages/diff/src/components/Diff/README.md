@@ -40,6 +40,9 @@ function Example() {
 ### currentContent
 当前版本内容（字符串）
 
+### threshold
+差异度，如果差异度过高则显示完全替换默认 0.85 也就是百分之 0.85的内容不相同时，表明删除了原本内容增加了全新内容
+
 ### toArray
 自定义转换函数，用于将字符串转换为数组（仅在 diffType="array" 时使用）
 
