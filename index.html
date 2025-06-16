@@ -8,6 +8,17 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="global-loading" style="
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #888;
+      z-index: 9999;
+      font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji');
+    ">Loading...</div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
