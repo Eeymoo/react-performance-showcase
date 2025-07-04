@@ -7,13 +7,6 @@ const BlockEdiorPage = () => {
   const BlockEditorRef = useRef<BlockEditorRef>(null); // 明确类型
   const [content, setContent] = React.useState(`
 [
-  { "order": 0, "type": "title", "content": "默认标题", "required": true },
-  {
-    "order": 4,
-    "type": "paragraph",
-    "content": "海外：德国图林根、匈牙利德布勒森",
-    "required": false
-  },
   {
     "order": 2,
     "type": "table",
@@ -22,96 +15,158 @@ const BlockEdiorPage = () => {
         {
           "content": [
             {
-              "type": "label",
-              "value": "问题"
-            },
-            {
               "type": "input",
-              "value": "以可再生能源和储能为核心，实现固定式化石能源替代，摆脱对火力发电的依赖"
-            },
-            {
-              "type": "label",
-              "value": "解决方案"
-            },
-            {
-              "type": "input",
-              "value": "以电动化+智能化为核心，实现市场应用的集成创新，为各行各业提供可持续、可普及、可信赖的能量来源，推动区域零碳生态建设及各领域绿色低碳转型"
+              "value": "香港联交所"
             }
           ],
           "rowSpan": 1,
-          "colSpan": 2
-        },
-        null,
-        {
-          "content": [
-            {
-              "type": "label",
-              "value": "问题"
-            },
-            {
-              "type": "input",
-              "value": "以可再生能源和储能为核心，实现固定式化石能源替代，摆脱对火力发电的依赖"
-            },
-            {
-              "type": "label",
-              "value": "解决方案"
-            },
-            {
-              "type": "input",
-              "value": "以电动化+智能化为核心，实现市场应用的集成创新，为各行各业提供可持续、可普及、可信赖的能量来源，推动区域零碳生态建设及各领域绿色低碳转型"
-            }
-          ]
+          "colSpan": 4
         }
       ],
       [
         {
           "content": [
             {
-              "type": "label",
-              "value": "问题"
-            },
-            {
               "type": "input",
-              "value": "以可再生能源和储能为核心，实现固定式化石能源替代，摆脱对火力发电的依赖"
-            },
-            {
-              "type": "label",
-              "value": "解决方案"
-            },
-            {
-              "type": "input",
-              "value": "以电动化+智能化为核心，实现市场应用的集成创新，为各行各业提供可持续、可普及、可信赖的能量来源，推动区域零碳生态建设及各领域绿色低碳转型"
+              "value": "方面"
             }
           ],
-          "rowSpan": 2,
+          "rowSpan": 1,
           "colSpan": 1
-        },
+        }
+      ],
+      [
         {
           "content": [
             {
-              "type": "label",
-              "value": "问题"
-            },
+              "type": "input",
+              "value": "强度"
+            }
+          ],
+          "rowSpan": 1,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
             {
               "type": "input",
-              "value": "以可再生能源和储能为核心，实现固定式化石能源替代，摆脱对火力发电的依赖"
-            },
-            {
-              "type": "label",
-              "value": "解决方案"
-            },
-            {
-              "type": "input",
-              "value": "以电动化+智能化为核心，实现市场应用的集成创新，为各行各业提供可持续、可普及、可信赖的能量来源，推动区域零碳生态建设及各领域绿色低碳转型"
+              "value": "位置"
             }
           ],
           "rowSpan": 1,
           "colSpan": 2
-        },
-        null
+        }
       ],
-      [null, { "content": [] }, { "content": [], "rowSpan": 2, "colSpan": 1 }],
-      [{ "content": [], "rowSpan": 1, "colSpan": 2 }, null, null]
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": "管治架构"
+            }
+          ],
+          "rowSpan": 18,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": "内容"
+            }
+          ],
+          "rowSpan": 1,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": null
+            }
+          ],
+          "rowSpan": 1,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": "环境"
+            }
+          ],
+          "rowSpan": 4,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": null
+            }
+          ],
+          "rowSpan": 4,
+          "colSpan": 2
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": "策略"
+            }
+          ],
+          "rowSpan": 6,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": null
+            }
+          ],
+          "rowSpan": 6,
+          "colSpan": 2
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": "管治"
+            }
+          ],
+          "rowSpan": 7,
+          "colSpan": 1
+        }
+      ],
+      [
+        {
+          "content": [
+            {
+              "type": "input",
+              "value": null
+            }
+          ],
+          "rowSpan": 7,
+          "colSpan": 2
+        }
+      ]
     ],
     "required": true
   }
@@ -148,7 +203,7 @@ const BlockEdiorPage = () => {
           <Input.TextArea
             style={{ width: "100%" }}
             placeholder="BlockEditor 组件"
-            readOnly
+            // readOnly
             autoSize={{ minRows: 2, maxRows: 6 }}
             value={content}
             onChange={(e) => {
