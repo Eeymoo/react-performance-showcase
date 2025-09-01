@@ -46,6 +46,13 @@ function DiffPage() {
 《红楼梦》版本有120回“程本”和80回“脂本”两大系统。程本为程伟元排印的印刷本，脂本为脂砚斋在不同时期抄评的早期手抄本。脂本是程本的底本。
 《红楼梦》是一部具有世界影响力的人情小说、中国封建社会的百科全书、传统文化的集大成者、中国古代小说巅峰之作、中国古典四大名著之首。其作者以“大旨谈情，实录其事”自勉，只按自己的事体情理，按迹循踪，摆脱旧套，新鲜别致，取得了非凡的艺术成就。“真事隐去，假语存焉”的特殊笔法更是令后世读者脑洞大开，揣测之说久而遂多。二十世纪以来，《红楼梦》更以其丰富深刻的思想底蕴和异常出色的艺术成就使学术界产生了以其为研究对象的专门学问——红学。 [3]`,
       },
+      {
+        historyContent: `《水浒传》是元末明初施耐庵创作的长篇小说（现存刊本署名大多有施耐庵或罗贯中或两人皆有），是中国历史上第一部用白话文写成的章回体长篇小说 [36]。
+全书通过描写以宋江为首的一百零八位梁山好汉消灭乱臣贼子、水泊梁山壮大和接受宋朝招安，以及受招安后为宋朝征战的宏大故事。 [41]
+《水浒传》是中国古典四大名著之一，问世后，在社会上产生了巨大的影响，成为后世中国小说创作的典范。《水浒传》是中国历史上最早用白话文写成的章回小说，流传极广，脍炙人口；同时也是汉语言文学中具备史诗特征的作品之一，对中国乃至东亚的叙事文学都有深远的影响。 [1]`,
+        currentContent: `《红楼梦》中国古代章回体长篇虚构 [23]小说，中国古典四大名著之一。其通行本共120回，一般认为前80回是清代作家曹雪芹所著，后40回作者为无名氏，整理者为程伟元、高鹗。小说以贾、史、王、薛四大家族的兴衰为背景，以富贵公子贾宝玉为视角，以贾宝玉与林黛玉、薛宝钗的爱情婚姻悲剧为主线，描绘了一些闺阁佳人的人生百态，展现了真正的人性美和悲剧美，是一部从各个角度展现女性美以及中国古代社会百态的史诗性著作。
+《水浒传》是中国古典四大名著之一，问世后，在社会上产生了巨大的影响，成为后世中国小说创作的典范。《水浒传》是中国历史上最早用白话文写成的章回小说，流传极广，脍炙人口；同时也是汉语言文学中具备史诗特征的作品之一，对中国乃至东亚的叙事文学都有深远的影响。 [1]`,
+      },
     ],
     []
   );
@@ -133,30 +140,26 @@ function DiffPage() {
             { label: "0.85", value: 0.85 },
             { label: "0.9", value: 0.9 },
             { label: "0.95", value: 0.95 },
-            { label: "1.0", value: 1.0 },            
+            { label: "1.0", value: 1.0 },
           ]}
           value={threshold}
-          onChange={(value: number) =>
-            setThreshold(value)
-          }
+          onChange={(value: number) => setThreshold(value)}
         />
       </div>
 
       <div className="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-100">
         <div className="flex gap-2 mb-4">
-          {
-            exampleContents.map((example, index) => (
-              <Button
-                key={index}
-                onClick={() => {
-                  setHistoryContent(example.historyContent);
-                  setCurrentContent(example.currentContent);
-                }}
-              >
-                示例 {index + 1}
-              </Button>
-            ))
-          }
+          {exampleContents.map((example, index) => (
+            <Button
+              key={index}
+              onClick={() => {
+                setHistoryContent(example.historyContent);
+                setCurrentContent(example.currentContent);
+              }}
+            >
+              示例 {index + 1}
+            </Button>
+          ))}
         </div>
         <div className="flex gap-4 mb-4">
           <div className="w-1/2">
