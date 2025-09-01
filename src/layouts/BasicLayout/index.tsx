@@ -8,6 +8,7 @@ const menuItems = [
   { key: "/diff", label: "Diff 差异展示" },
   { key: "/operation", label: "Operation 操作列" },
   { key: "/block-editor", label: "Block Editor 块编辑器" },
+  { key: "/animation", label: "Animation 动画" },
   // 可以继续添加其他菜单项
 ];
 

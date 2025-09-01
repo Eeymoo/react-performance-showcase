@@ -6,6 +6,7 @@ const BasicLayout = lazy(() => import("./layouts/BasicLayout"));
 const DiffPackage = lazy(() => import("@packages/diff"));
 const OperationPackage = lazy(() => import("@packages/operation"));
 const BlockEditorPackage = lazy(() => import("@packages/blockEditor"));
+const AnimationPackage = lazy(() => import("@packages/animation"));
 
 const router = createBrowserRouter([
   {
@@ -23,9 +24,13 @@ const router = createBrowserRouter([
       {
         path: "block-editor",
         element: <BlockEditorPackage />,
-      }
+      },
+      {
+        path: "animation",
+        element: <AnimationPackage />,
+      },
     ],
-  }
+  },
 ]);
 
 export default router;

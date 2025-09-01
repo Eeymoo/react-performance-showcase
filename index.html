@@ -1,14 +1,13 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Performance Showcase</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <div id="global-loading" style="
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Performance Showcase</title>
+  <style>
+    #global-loading {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -18,7 +17,39 @@
       color: #888;
       z-index: 9999;
       font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji');
-    ">Loading...</div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    }
+
+    #global-loading::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: #888;
+      animation: a-move 1s infinite linear;
+    }
+
+    @keyframes a-move {
+      0% {
+        left: 0;
+      }
+
+      50% {
+        left: 60px;
+      }
+
+      100% {
+        left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <div id="global-loading">Loading...</div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
